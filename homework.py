@@ -37,7 +37,7 @@ logger.addHandler(handler)
 
 
 def send_message(bot, message):
-    """Отправка сообщения в Telegram"""
+    """Отправка сообщения в Telegram."""
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
         logging.info(f'Сообщение успешно отправлено в Telegram: {message}')
@@ -47,7 +47,7 @@ def send_message(bot, message):
 
 
 def get_api_answer(current_timestamp):
-    """Запрос к эндпоинту API-сервиса"""
+    """Запрос к эндпоинту API-сервиса."""
     timestamp = current_timestamp or int(time.time())
     params = {'from_date': timestamp}
     try:
@@ -70,7 +70,7 @@ def get_api_answer(current_timestamp):
 
 
 def check_response(response):
-    """Проверка корректности ответа API"""
+    """Проверка корректности ответа API."""
     if not isinstance(response, dict):
         message = 'Ответ API не является словарём'
         logging.error(message)
@@ -88,7 +88,7 @@ def check_response(response):
 
 
 def parse_status(homework):
-    """Извлечение статуса домашней работы"""
+    """Извлечение статуса домашней работы."""
     homework_name = homework['homework_name']
     homework_status = homework['status']
     if homework_status not in HOMEWORK_STATUSES:
@@ -123,12 +123,13 @@ def main():
         raise Exception('Отсутствуют переменные окружения')
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     # current_timestamp = int(time.time())
-    current_timestamp = 1652161970
+    current_timestamp = 0
     error_message = ''
     while True:
         try:
             response = get_api_answer(current_timestamp)
             homeworks = check_response(response)
+            print(response)
             if homeworks:
                 for homework in homeworks:
                     parse_homework = parse_status(homework)
