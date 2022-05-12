@@ -129,8 +129,6 @@ def main():
         try:
             response: dict = get_api_answer(current_timestamp)
             homeworks: list = check_response(response)
-            print(response)
-            print(type(TELEGRAM_CHAT_ID))
             if homeworks:
                 for homework in homeworks:
                     parse_homework: str = parse_status(homework)
