@@ -127,10 +127,13 @@ def main():
         try:
             response: dict = get_api_answer(current_timestamp)
             homeworks: list = check_response(response)
-            if homeworks:
-                for homework in homeworks:
-                    parse_homework: str = parse_status(homework)
-                    # if telegram_message != parse_homework:
+            if not homeworks:
+                log_message = 'Сбой в работе программы'
+                logging.critical(log_message)
+                raise Exception(log_message)
+            for homework in homeworks:
+                parse_homework: str = parse_status(homework)
+                if telegram_message != parse_homework:
                     send_message(bot, parse_homework)
             time.sleep(settings.RETRY_TIME)
         except Exception as error:
