@@ -122,7 +122,6 @@ def main():
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     error_message = ''
-    telegram_message = ''
     while True:
         try:
             response: dict = get_api_answer(current_timestamp)
@@ -130,8 +129,7 @@ def main():
             if homeworks:
                 for homework in homeworks:
                     parse_homework: str = parse_status(homework)
-                    if telegram_message != parse_homework:
-                        send_message(bot, parse_homework)
+                    send_message(bot, parse_homework)
             time.sleep(settings.RETRY_TIME)
         except Exception as error:
             message = f'Сбой в работе программы: {error}'
