@@ -135,12 +135,8 @@ def main():
             message = f'Сбой в работе программы: {error}'
             logging.error(message)
             if error_message != message:
-                try:
-                    send_message(bot, message)
-                    error_message: str = message
-                except Exception as send_error:
-                    message_err = f'Сбой в работе программы: {send_error}'
-                    logging.error(message_err)
+                send_message(bot, message)
+                error_message: str = message
         finally:
             time.sleep(settings.RETRY_TIME)
 
