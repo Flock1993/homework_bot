@@ -45,7 +45,8 @@ def get_api_answer(current_timestamp: int) -> dict:
     timestamp: int = current_timestamp or int(time.time())
     params: dict = {'from_date': timestamp}
     try:
-        response: requests.Response = requests.get(settings.ENDPOINT, headers=HEADERS, params=params)
+        response: requests.Response = requests.get(
+            settings.ENDPOINT, headers=HEADERS, params=params)
     except requests.exceptions.RequestException:
         message = (
             f'Эндпоинт {settings.ENDPOINT} недоступен'
@@ -115,8 +116,9 @@ def check_tokens() -> bool:
 def main():
     """Основная логика работы бота."""
     if not check_tokens():
-        logging.critical(f'Отсутствуют переменные окружения')
-        raise Exception('Отсутствуют переменные окружения')
+        log_message = 'Отсутствуют переменные окружения'
+        logging.critical(log_message)
+        raise Exception(log_message)
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
     error_message = ''
